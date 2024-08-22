@@ -1,0 +1,93 @@
+.App {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input[type="text"], input[type="date"] {
+  padding: 10px;
+  font-size: 16px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: calc(100% - 24px);
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+li input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+li button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+li button:hover {
+  background-color: #c82333;
+}
+
+li button:first-of-type {
+  background-color: #007bff;
+}
+
+li button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+.edit-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.edit-inputs input {
+  margin-bottom: 5px;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
