@@ -2,23 +2,47 @@
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
 }
 
-form {
+.search-input {
+  width: calc(100% - 24px);
+  padding: 10px;
+  font-size: 16px;
   margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-input[type="text"], input[type="date"] {
+.toggle-add-form {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toggle-add-form:hover {
+  background-color: #0056b3;
+}
+
+.todo-form input[type="text"],
+.todo-form input[type="date"] {
+  width: calc(33% - 10px);
   padding: 10px;
   font-size: 16px;
   margin-right: 10px;
   margin-bottom: 10px;
-  width: calc(100% - 24px);
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-button {
+.todo-form button {
   padding: 10px 15px;
   font-size: 16px;
   cursor: pointer;
@@ -26,68 +50,168 @@ button {
   color: white;
   border: none;
   border-radius: 5px;
-  margin-right: 5px;
 }
 
-button:hover {
+.todo-form button:hover {
   background-color: #218838;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.todo-list {
+  text-align: left;
 }
 
-li {
-  padding: 10px;
-  font-size: 18px;
+.todo-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
   margin-bottom: 10px;
 }
 
-li:last-child {
-  border-bottom: none;
+.todo-header span {
+  flex: 1;
+  padding: 0 10px;
 }
 
-li input[type="checkbox"] {
+.header-actions {
+  flex: 0 0 200px;
+  text-align: center;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.todo-item > * {
   margin-right: 10px;
 }
 
-li button {
+.todo-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.todo-title, .todo-description, .todo-due-date {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action-buttons {
+  flex: 0 0 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.edit-button {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.edit-button:hover {
+  background-color: #e0a800;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.delete-button {
   background-color: #dc3545;
   color: white;
   border: none;
   padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
-li button:hover {
+.delete-button:hover {
   background-color: #c82333;
 }
 
-li button:first-of-type {
-  background-color: #007bff;
+.completed {
+  text-decoration: line-through;
+  color: #888;
 }
 
-li button:first-of-type:hover {
-  background-color: #0056b3;
+.overdue {
+  color: #dc3545;
 }
 
-.edit-inputs {
+.completed-task {
+  color: #28a745;
+}
+
+.action-buttons button svg {
+  margin-right: 5px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.edit-inputs input {
-  margin-bottom: 5px;
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+  position: relative;
 }
 
-.edit-buttons {
-  display: flex;
-  justify-content: flex-end;
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.todo-description {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #007bff;
+}
+
+.todo-description:hover {
+  color: #0056b3;
 }

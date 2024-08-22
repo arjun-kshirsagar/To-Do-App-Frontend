@@ -8,21 +8,44 @@ const API_URL = 'http://localhost:8000/api/todos/';
 
 function Todo() {
   const [todos, setTodos] = useState([]);
+  const [filteredTodos, setFilteredTodos] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
     fetchTodos();
   }, []);
 
+  useEffect(() => {
+    filterTodos();
+  }, [todos, searchQuery]);
+
   const fetchTodos = async () => {
     try {
       const response = await axios.get(API_URL);
       setTodos(response.data);
+      setError(null);
     } catch (error) {
       console.error('Failed to fetch todos', error);
+      setError(`Failed to fetch todos: ${error.message}`);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      }
     }
+  };
+
+  const filterTodos = () => {
+    const filtered = todos.filter(todo =>
+      todo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      todo.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredTodos(filtered);
   };
 
   const addTodo = async (e) => {
@@ -33,8 +56,10 @@ function Todo() {
       setDescription('');
       setDueDate('');
       fetchTodos();
+      setShowAddForm(false);
     } catch (error) {
       console.error('Failed to add todo', error);
+      setError(`Failed to add todo: ${error.message}`);
     }
   };
 
@@ -51,6 +76,7 @@ function Todo() {
     } catch (error) {
       setTodos(todos);
       console.error('Failed to update todo', error);
+      setError(`Failed to update todo: ${error.message}`);
     }
   };
 
@@ -63,6 +89,7 @@ function Todo() {
     } catch (error) {
       fetchTodos();
       console.error('Failed to delete todo', error);
+      setError(`Failed to delete todo: ${error.message}`);
     }
   };
 
@@ -79,23 +106,37 @@ function Todo() {
     } catch (error) {
       setTodos(todos);
       console.error('Failed to update todo', error);
+      setError(`Failed to update todo: ${error.message}`);
     }
   };
 
   return (
     <div className="App">
       <h1>Todo App</h1>
-      <TodoForm
-        title={title}
-        setTitle={setTitle}
-        description={description}
-        setDescription={setDescription}
-        dueDate={dueDate}
-        setDueDate={setDueDate}
-        addTodo={addTodo}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      <input
+        type="text"
+        placeholder="Search todos..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-input"
       />
+      <button onClick={() => setShowAddForm(!showAddForm)} className="toggle-add-form">
+        {showAddForm ? 'Cancel' : 'Add Todo'}
+      </button>
+      {showAddForm && (
+        <TodoForm
+          title={title}
+          setTitle={setTitle}
+          description={description}
+          setDescription={setDescription}
+          dueDate={dueDate}
+          setDueDate={setDueDate}
+          addTodo={addTodo}
+        />
+      )}
       <TodoList
-        todos={todos}
+        todos={filteredTodos}
         toggleComplete={toggleComplete}
         deleteTodo={deleteTodo}
         updateTodo={updateTodo}
